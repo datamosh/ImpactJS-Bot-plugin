@@ -1,6 +1,7 @@
 ## Installation
 - Copy `bot.js` to `lib/plugins/`
 - Make your bot (use `enemy_bot.js` as reference)
+- It's Alive!!
 
 ## Config
 
@@ -52,16 +53,23 @@ during: [function] (Optional) - A function to call during the action
 complete: [function] (Optional) - A function to call once the action is complete
 ```
 
+## My game has a particular way to move the entities
+
+you can redefine the basic functions:
+`bot_walk`, `bot_jump` and `bot_stop` *(for now)*
+
+See the [source code](https://github.com/datamosh/ImpactJS-Bot-plugin/blob/master/bot.js) for more information
+
 ## Example
 
 ```javascript
 // Configure bot
 bot: {
-  config: {
+	config: {
 		loop: true, // [boolean] (Optional, default true) - Loop routine
 		hole_jump: false, // [boolean] (Optional, default true) - If there's a hole in the collision map, jump
-		hole_wall: true // [boolean] (Optional, default false) - If there's a hole in the collision map, change direction
-    death_fall: true // [boolean] (Optional, default true) - The bot dies if it falls off the screen (pos.y > collisionMap height)
+		hole_wall: true, // [boolean] (Optional, default false) - If there's a hole in the collision map, change direction
+		death_fall: true // [boolean] (Optional, default true) - The bot dies if it falls off the screen (pos.y > collisionMap height)
 	},
 	movements: [
 		// Wait for player and then wait 100 milliseconds
@@ -119,7 +127,7 @@ bot: {
 			}
 		}
 	]
-},
+}
 ```
 
 Impact forum post: http://impactjs.com/forums/code/impact-bot
