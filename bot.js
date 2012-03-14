@@ -65,8 +65,7 @@ ig.module('plugins.bot')
 				ty = Math.round(this.pos.y / ig.game.collisionMap.tilesize),
 				mx = this.vel.x * ig.system.tick,
 				my = this.vel.y * ig.system.tick,
-				step = this.bot.movements[this.step],
-				player = ig.game.getEntitiesByType(EntityPlayer)[0];
+				step = this.bot.movements[this.step];
 
 			if(this.step == null) return;
 
@@ -82,8 +81,8 @@ ig.module('plugins.bot')
 
 			// Wait
 			if(step.action == 'wait') {
-				// Wait for player on screen
-				if(step.entity == 'player' && (player != undefined && this.distanceTo(player) > ig.system.width)) {
+				// Wait for entity on screen
+				if(step.entity != null && this.distanceTo(ig.game.getEntityByName(step.entity)) > ig.system.width) {
 					this.pause = true;
 				} else if(step.duration > 0) {
 					this.pause = false;

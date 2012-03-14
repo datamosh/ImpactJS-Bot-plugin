@@ -69,7 +69,7 @@ ig.module(
 						console.log('Starts jumping');
 					},
 					during: function() {
-						console.log('Im jumpig!!1!');
+						console.log('Im jumping!!1!');
 					},
 					complete: function() {
 						console.log('Movement complete!')

@@ -7,10 +7,10 @@
 ## Config
 
 ```
-loop [boolean] (Optional, default true) - Loop routine
-hole_jump [boolean] (Optional, default true) - If there's a hole in the collision map, jump
-hole_wall [boolean] (Optional, default true) - If there's a hole in the collision map, change direction
-death_fall [boolean] (Optional, default true) - The bot dies if it falls off the screen (pos.y > collisionMap height)
+loop: [boolean] (Optional, default true) - Loop routine
+hole_jump: [boolean] (Optional, default true) - If there's a hole in the collision map, jump
+hole_wall: [boolean] (Optional, default true) - If there's a hole in the collision map, change direction
+death_fall: [boolean] (Optional, default true) - The bot dies if it falls off the screen (pos.y > collisionMap height)
 ```
 
 ## Movements
@@ -18,7 +18,6 @@ death_fall [boolean] (Optional, default true) - The bot dies if it falls off the
 action: *function*
 
 ```
-action: [function] - A function to call
 start: [function] (Optional) - A function to call when the action starts
 during: [function] (Optional) - A function to call during the action
 complete: [function] (Optional) - A function to call once the action is complete
@@ -28,7 +27,7 @@ action: *wait*
 
 ```
 duration: [seconds]
-entity: 'player' (Optional) - Wait for player on screen
+entity: [string] (Optional) - Name of entity
 start: [function] (Optional) - A function to call when the action starts
 during: [function] (Optional) - A function to call during the action
 complete: [function] (Optional) - A function to call once the action is complete
