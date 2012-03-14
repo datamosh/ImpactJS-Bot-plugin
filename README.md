@@ -1,5 +1,6 @@
 ## Installation
 - Copy `bot.js` to `lib/plugins/`
+- Add plugin in main.js: `'plugins.bot'`
 - Make your bot (use `enemy_bot.js` as reference)
 - It's Alive!!
 
