@@ -14,6 +14,7 @@ ig.module('plugins.bot')
 		timer: null,
 		step: 0,
 		pause: true,
+		distance: 0,
 
 		// Movements (Can be refefined)
 		bot_walk: function(direction) {
@@ -101,23 +102,28 @@ ig.module('plugins.bot')
 				} else {
 					console.error('BOT Error: wait duration is undefined');
 				}
+			} else {
+				this.pause = false;
 			}
 
 			// Jump
 			if(step.action == 'jump') {
-				if(this.standing && !this.pause) {
+				console.log(this.distance);
+				if(this.standing && this.distance == 0) {
+					this.distance = 0;
 					this.bot_jump(-step.vel);
-					this.pause = true;
 					// Start function
 					if(typeof step.start == 'function') step.start.call(this);
-				} else if(!this.standing && this.pause) {
+				} else if(!this.standing && this.vel.y != 0) {
 					if(step.direction != undefined) this.bot_walk(step.direction);
-					// Player
-					// ..
+					// Calculate distance
+					var distance_y = my;
+					if(distance_y < 0) distance_y = distance_y * -1;
+					this.distance += distance_y;
 				} else {
 					this.bot_stop();
-					this.pause = false;
 					this.step += 1;
+					this.distance = 0;
 					// Complete function
 					if(typeof step.complete == 'function') step.complete.call(this);
 				}
@@ -125,36 +131,33 @@ ig.module('plugins.bot')
 
 			// Walk
 			if(step.action == 'walk') {
-				// Get original position
-				if(this.vel.x == 0 && this.original == undefined) {
-					this.original = { x: this.pos.x, y: 0 }
+				// Setup walk
+				if(this.vel.x == 0 && this.distance == 0) {
+					this.distance = 0;
 					// Start function
 					if(typeof step.start == 'function') step.start.call(this);
 				}
-				if(!this.pause) {
-					// Change direction (collision x)
-					if(this.pos.x == this.last.x && this.original.x != this.pos.x) {
-						if(step.direction == 'left') {
-							step.direction = 'right';
-						} else if(step.direction == 'right') {
-							step.direction = 'left';
-						}
-					}
-					// Move
-					if(step.direction != undefined) this.bot_walk(step.direction);
-					// Calculate distance
-					var distance = this.original.x - this.pos.x;
-					if(distance < 0) distance = distance * -1;
-					if(distance >= step.distance) {
-						this.bot_stop();
-						this.pause = false;
-						this.step += 1;
-						// Complete function
-						if(typeof step.complete == 'function') step.complete.call(this);
+				// Change direction (collision x)
+				if(this.pos.x == this.last.x && this.distance != 0) {
+					if(step.direction == 'left') {
+						step.direction = 'right';
+					} else if(step.direction == 'right') {
+						step.direction = 'left';
 					}
 				}
-			} else {
-				this.original = undefined;
+				// Move
+				if(step.direction != undefined) this.bot_walk(step.direction);
+				// Calculate distance
+				var distance_x = mx;
+				if(distance_x < 0) distance_x = distance_x * -1;
+				if(this.vel.y == 0) this.distance += distance_x;
+				if(this.distance >= step.distance) {
+					this.bot_stop();
+					this.step += 1;
+					this.distance = 0;
+					// Complete function
+					if(typeof step.complete == 'function') step.complete.call(this);
+				}
 			}
 
 			// Hole jump
@@ -172,7 +175,7 @@ ig.module('plugins.bot')
 			}
 
 			// Hole wall
-			if(this.bot.config.hole_wall) {
+			if(this.bot.config.hole_wall && step.action != 'jump') {
 				if(this.vel.x < 0 && (tx > 0 && ty < ig.game.collisionMap.height - 1)) {
 					if(ig.game.collisionMap.data[ty+1][tx-1] == 0) {
 						step.direction = 'right';

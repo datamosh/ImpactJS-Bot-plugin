@@ -23,8 +23,8 @@ ig.module(
 		bot: {
 			config: {
 				loop: true, // [boolean] (Optional, default true) - Loop routine
-				hole_jump: false, // [boolean] (Optional, default true) - If there's a hole in the collision map, jump
-				hole_wall: true, // [boolean] (Optional, default false) - If there's a hole in the collision map, change direction
+				hole_jump: true, // [boolean] (Optional, default true) - If there's a hole in the collision map, jump
+				hole_wall: false, // [boolean] (Optional, default false) - If there's a hole in the collision map, change direction
 				death_fall: true // [boolean] (Optional, default true) - The bot dies if it falls off the screen (pos.y > collisionMap height)
 			},
 			movements: [
@@ -48,7 +48,7 @@ ig.module(
 				{
 					action: 'walk',
 					direction: 'left',
-					distance: 40,
+					distance: 90,
 					start: function() {
 						console.log('Starts walking');
 					},
@@ -60,11 +60,11 @@ ig.module(
 					}
 				},
 
-				// Jump in place
+				// Jump to the right
 				{
 					action: 'jump',
-					//direction: 'right',
-					vel: 150,
+					direction: 'right',
+					vel: 100,
 					start: function() {
 						console.log('Starts jumping');
 					},
