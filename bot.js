@@ -108,7 +108,6 @@ ig.module('plugins.bot')
 
 			// Jump
 			if(step.action == 'jump') {
-				console.log(this.distance);
 				if(this.standing && this.distance == 0) {
 					this.distance = 0;
 					this.bot_jump(-step.vel);
