@@ -83,7 +83,8 @@ ig.module('plugins.bot')
 			// Wait
 			if(step.action == 'wait') {
 				// Wait for entity on screen
-				if(step.entity != null && this.distanceTo(ig.game.getEntityByName(step.entity)) > ig.system.width) {
+				var entity = ig.game.getEntityByName(step.entity);
+				if(step.entity != null && entity != undefined && this.distanceTo(entity) > ig.system.width) {
 					this.pause = true;
 				} else if(step.duration > 0) {
 					this.pause = false;
